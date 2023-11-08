@@ -1,6 +1,6 @@
 import { html } from "lit-html";
 import { LitComponent } from "./LitComponent";
-import { sleep } from "../utils";
+import { sleep, timedPromise } from "../utils";
 
 export class Articles extends LitComponent {
   constructor() {
@@ -52,7 +52,7 @@ export class Articles extends LitComponent {
       ...this.state,
       loading: true,
     };
-    const response = await fetch(url);
+    const response = await timedPromise(fetch(url), 60000);
     const res = await response.json();
     this.state = {
       ...res,
