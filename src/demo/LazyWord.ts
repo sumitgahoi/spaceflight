@@ -11,7 +11,9 @@ export class LazyWord extends LazyLitComponent {
     if (index < words.length) {
       const props = { words, index: index + 1 };
       const word = words[index];
-      return html`${word + " "}<space-lazy-word .props=${props}></space-lazy-word>`;
+      return html`${word + " "}<space-lazy-word
+          .props=${props}
+        ></space-lazy-word>`;
     } else {
       return html``;
     }

@@ -1,5 +1,6 @@
 import { html } from "lit-html";
 import { LitComponent } from "./LitComponent";
+import { sleep } from "../utils";
 
 export class Articles extends LitComponent {
   constructor() {
@@ -46,6 +47,7 @@ export class Articles extends LitComponent {
   }
 
   private async fetchData(url: string) {
+    await sleep(1000);
     this.state = {
       ...this.state,
       loading: true,
@@ -71,7 +73,8 @@ export class Articles extends LitComponent {
 
       ${this.state.loading
         ? html` <space-spinner></space-spinner>`
-        : html` ${this.getTable()} ${this.getPrevBtn()} ${this.getNextBtn()} `}
+        : html` ${this.getTable()} `}
+      ${this.getPrevBtn()} ${this.getNextBtn()}
     `;
   }
 
