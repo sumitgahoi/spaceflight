@@ -83,14 +83,27 @@ export abstract class LitComponent<P = any, S = any> extends HTMLElement {
     if (this.updateComplete === null) {
       this.updateComplete = Promise.resolve()
         .then(() => (this.updateComplete = null))
-        .then(() => this.performUpdate());
+        .then(() => this.performEagerUpdate());
     }
 
     return this.updateComplete;
   }
 
-  private async performUpdate(): Promise<void> {
+  private async performEagerUpdate(): Promise<void> {
     const template = await this.prepareTemplate();
     this.renderTemplate(template);
+  }
+
+  private async performLazyUpdate(): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.prepareTemplate().then((template) =>
+          requestAnimationFrame(() => {
+            this.renderTemplate(template);
+            resolve();
+          })
+        );
+      });
+    });
   }
 }

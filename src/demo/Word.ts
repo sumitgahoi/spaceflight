@@ -1,12 +1,19 @@
-import { TemplateResult, html } from "lit-html";
+import { html } from "lit-html";
 import { LitComponent } from "../components/LitComponent";
-import { sleep } from "../utils";
 
 export class Word extends LitComponent {
   protected async template() {
-    await sleep(this.props.index * 100);
-    return new Promise<TemplateResult>((res) => {
-      res(html`${this.props.word + " "}`);
-    });
+    for (let i = 0; i < 50000000; i++) {
+      // mock slowness
+    }
+    const { words, index } = this.props;
+
+    if (index < words.length) {
+      const props = { words, index: index + 1 };
+      const word = words[index];
+      return html`${word + " "}<space-word .props=${props}></space-word>`;
+    } else {
+      return html``;
+    }
   }
 }

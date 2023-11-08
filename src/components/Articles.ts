@@ -7,6 +7,12 @@ export class Articles extends LitComponent {
     this.state = { loading: false, results: [] };
   }
 
+  protected async componentDidMount(): Promise<void> {
+    const url =
+      "https://api.spaceflightnewsapi.net/v4/articles/?format=json&offset=0&limit=1";
+    await this.fetchData(url);
+  }
+
   private async fetchNextBatch() {
     const url = this.state.next;
     await this.fetchData(url);
