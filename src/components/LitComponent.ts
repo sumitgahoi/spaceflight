@@ -1,9 +1,10 @@
-import { TemplateResult, render } from 'lit-html';
+import { TemplateResult, render } from "lit-html";
 
 export abstract class LitComponent<P = any, S = any> extends HTMLElement {
   private readonly renderRoot: HTMLElement | DocumentFragment;
-  private _props: P = {} as any;
-  private _state: S = {} as any;
+  private _props: P = {} as P;
+  private _state: S = {} as S;
+
   private updateComplete: Promise<void> | null = null;
 
   constructor() {
@@ -17,7 +18,7 @@ export abstract class LitComponent<P = any, S = any> extends HTMLElement {
    * Override this method to return `this` to render the template as this element's childNodes.
    */
   protected createRenderRoot(): HTMLElement | ShadowRoot {
-    return this.attachShadow({ mode: 'open' });
+    return this.attachShadow({ mode: "open" });
   }
 
   get props() {

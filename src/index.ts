@@ -12,7 +12,7 @@ if (demo) {
       <main>
         <space-words></space-words>
       </main>`,
-    document.body
+    document.body,
   );
 } else {
   render(
@@ -23,6 +23,6 @@ if (demo) {
       <main>
         <space-articles></space-articles>
       </main>`,
-    document.body
+    document.body,
   );
 }

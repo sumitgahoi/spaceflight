@@ -7,22 +7,14 @@ export class Articles extends LitComponent {
     this.state = { loading: false, results: [] };
   }
 
-  protected async componentDidMount(): Promise<void> {
-    await this.fetchNextBatch();
-  }
-
   private async fetchNextBatch() {
-    const url =
-      this.state.next ||
-      "https://api.spaceflightnewsapi.net/v4/articles/?format=json&limit=5&offset=0";
+    const url = this.state.next;
     await this.fetchData(url);
   }
 
   private async fetchPrevBatch() {
     const url = this.state.previous;
-    if (url) {
-      await this.fetchData(url);
-    }
+    await this.fetchData(url);
   }
 
   private async search(payload: {
@@ -32,7 +24,7 @@ export class Articles extends LitComponent {
   }) {
     const { search, sites, limit } = payload;
 
-    let args = "format=json&limit=5&offset=0";
+    let args = "format=json&offset=0";
     if (search) {
       args += `&search=${search}`;
     }
@@ -73,16 +65,15 @@ export class Articles extends LitComponent {
 
       ${this.state.loading
         ? html` <space-spinner></space-spinner>`
-        : html`
-            <table>
-              ${this.getHeader()}
-              ${this.state.results.map((article: any) =>
-                this.getArticleRow(article)
-              )}
-            </table>
-            ${this.getPrevBtn()} ${this.getNextBtn()}
-          `}
+        : html` ${this.getTable()} ${this.getPrevBtn()} ${this.getNextBtn()} `}
     `;
+  }
+
+  private getTable() {
+    return html`<table>
+      ${this.getHeader()}
+      ${this.state.results.map((article: any) => this.getArticleRow(article))}
+    </table>`;
   }
 
   private getHeader() {

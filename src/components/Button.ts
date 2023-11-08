@@ -26,12 +26,13 @@ export class Button extends LitComponent {
   protected template() {
     const { disabled, label } = this.props;
     const { inProgress } = this.state;
-    if (disabled || inProgress) {
-      return html` <button disabled="true">${label}</button> `;
-    } else {
-      return html`
-        <button @click="${this.onClick.bind(this)}">${label}</button>
-      `;
-    }
+    return html`
+      <button
+        ?disabled="${disabled || inProgress}"
+        @click="${this.onClick.bind(this)}"
+      >
+        ${label}
+      </button>
+    `;
   }
 }
