@@ -2,9 +2,9 @@ export function sleep(ms: number) {
   return new Promise((res) => setTimeout(res, ms));
 }
 
-export function timedPromise<T>(p: Promise<T>, ms: number) {
+export function timedPromise<T>(target: Promise<T>, ms: number) {
   return new Promise<T>((res, rej) => {
-    p.then((result: T) => res(result)).catch((err) => rej(err));
+    target.then(res).catch(rej);
     setTimeout(rej, ms);
   });
 }
